@@ -18,11 +18,12 @@ let mouseX = 0;
 let mouseY = 0;
 let GoombaHealth = 100;
 let MarioHealth = 100;
-let AttackSelect = "...";
+let AttackSelect = "Your Turn";
 let EnemyGoombaAttackSelect = 0;
 let attackEFF = 0;
 let MarioHealthFinal = 100;
 let GoombaHealthFinal = 100;
+let EffText = "";
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
@@ -58,6 +59,8 @@ function draw() {
     Stage1End();
   } else if (state === "gameonLevel2") {
     GameonLevel2();
+  } else if (state === "level2GameOver") {
+    MarioDied();
   }
 
   requestAnimationFrame(draw);
@@ -71,8 +74,10 @@ function mouseDownListner() {
     countdown();
   } else if (state === "Stage1End") {
     state = "gameonLevel2";
-    // Attack Event Listner
-    cnv.addEventListener("click", MouseTrackerLevel2);
+  } else if (state === "level2GameOver") {
+    state = "gameonLevel2";
+    MarioHealth = 100;
+    MarioHealthFinal = 100;
   }
 }
 document.addEventListener("keydown", movement);
