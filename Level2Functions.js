@@ -55,23 +55,25 @@ function MouseTrackerLevel2(event) {
     MarioHealthFinal > 0 &&
     AttackSelect === "Your Turn"
   ) {
-    attackEFF = Math.random() * 5;
+    attackEFF = Math.random();
     if (mouseX > 20 && mouseY > 20 && mouseX < 270 && mouseY < 90) {
       console.log("Punched");
-      GoombaHealth -= 5 * `${attackEFF}`;
       AttackEfftext();
+      GoombaHealth -= AttackDmg;
       GoombaHealthFinal = Math.round(GoombaHealth);
       AttackSelect = `You Used Punch Which ${EffText}`;
       AttackState = "Enemy";
+      console.log(`Attack Eff = ${attackEFF}`);
       setTimeout(GoombaAttack, 2500);
       GoombaHealthChecker();
     } else if (mouseX > 321 && mouseX < 572 && mouseY > 20 && mouseY < 90) {
       console.log("Kicked");
-      AttackSelect = `You Used Kick Which ${EffText}`;
-      GoombaHealth -= 7 * `${attackEFF}`;
       AttackEfftext();
+      GoombaHealth -= AttackDmg;
       GoombaHealthFinal = Math.round(GoombaHealth);
+      AttackSelect = `You Used Kick Which ${EffText}`;
       AttackState = "Enemy";
+      console.log(`Attack Eff = ${attackEFF}`);
       setTimeout(GoombaAttack, 2500);
       GoombaHealthChecker();
     } else if (mouseX > 630 && mouseX < 880 && mouseY > 19 && mouseY < 90) {
@@ -89,49 +91,51 @@ function ResetAttackText() {
 function GoombaAttack() {
   console.log("GoombaAttack");
   console.log(state, AttackState);
-  attackEFF = Math.random();
   if (
     state === "gameonLevel2" &&
     AttackState === "Enemy" &&
     GoombaHealthFinal > 0
   ) {
     EnemyGoombaAttackSelect = Math.random();
-    attackEFF = Math.random() * 10;
+    attackEFF = Math.random();
     if (EnemyGoombaAttackSelect <= 0.25) {
-      AttackSelect = `King Goomba used GOOMBA BOUNCE Which ${EffText}`;
       setTimeout(ResetAttackText, 2000);
-      MarioHealth -= 8 * `${attackEFF}`;
       AttackEfftext();
+      MarioHealth -= AttackDmg;
+      AttackSelect = `King Goomba used GOOMBA BOUNCE Which ${EffText}`;
       console.log("Goomba Attack");
       MarioHealthFinal = Math.round(MarioHealth);
       AttackState = "Player";
+      console.log(`Attack Eff = ${attackEFF}`);
       MarioHealthChecker();
     } else if (EnemyGoombaAttackSelect <= 0.5) {
-      AttackSelect = `King Goomba Used NO HAND SLAP Which ${EffText}`;
       setTimeout(ResetAttackText, 2000);
-      MarioHealth -= 4 * `${attackEFF}`;
       AttackEfftext();
+      MarioHealth -= AttackDmg;
+      AttackSelect = `King Goomba used GOOMBA BOUNCE Which ${EffText}`;
       console.log("Goomba Attack");
       MarioHealthFinal = Math.round(MarioHealth);
       AttackState = "Player";
+      console.log(`Attack Eff = ${attackEFF}`);
       MarioHealthChecker();
     } else if (EnemyGoombaAttackSelect <= 0.55) {
-      AttackSelect = "Kinga Goomba Used HEAl";
+      AttackSelect = "Kinga Goomba Used HEAL";
       setTimeout(ResetAttackText, 2000);
-      GoombaHealth += 20;
-      GoombaHealthFinal += 20;
+      GoombaHealth += 10;
+      GoombaHealthFinal += 10;
       console.log("Goomba Attack");
       MarioHealthFinal = Math.round(MarioHealth);
       AttackState = "Player";
       MarioHealthChecker();
     } else {
-      AttackSelect = `King Goomba used GOOMBA STOMP Which ${EffText}`;
       setTimeout(ResetAttackText, 2000);
       console.log("Goomba Attack");
-      MarioHealth -= 3 * `${attackEFF}`;
       AttackEfftext();
+      MarioHealth -= AttackDmg;
+      AttackSelect = `King Goomba used GOOMBA STOMP Which ${EffText}`;
       MarioHealthFinal = Math.round(MarioHealth);
       AttackState = "Player";
+      console.log(`Attack Eff = ${attackEFF}`);
       MarioHealthChecker();
     }
   }
@@ -158,6 +162,7 @@ function MarioHealthChecker() {
   if (MarioHealthFinal < 1) {
     state = "level2GameOver";
     console.log(`Mario Died`);
+    MarioHealthFinal = 0;
   }
 }
 
@@ -166,21 +171,46 @@ function GoombaHealthChecker() {
   if (GoombaHealthFinal < 1) {
     state = "level2Finished";
     console.log(`Player has Beaten Level 2`);
+    state = "Level2Finished";
   }
 }
 
+// Text Eff Text Gen
 function AttackEfftext() {
-  if (attackEFF === 1) {
+  if (attackEFF <= 0.1) {
     EffText = "Missed";
-  } else if (attackEFF <= 2) {
-    EffText = "Tickled";
-  } else if (attackEFF <= 4) {
+    AttackDmg = "0";
+  } else if (attackEFF <= 0.2) {
+    EffText = "Felt like a Flick";
+    AttackDmg = "2";
+  } else if (attackEFF <= 0.4) {
     EffText = "Stung";
-  } else if (attackEFF <= 6) {
+    AttackDmg = "4";
+  } else if (attackEFF <= 0.6) {
     EffText = "Hurt";
-  } else if (attackEFF <= 8) {
+    AttackDmg = "6";
+  } else if (attackEFF <= 0.8) {
     EffText = "Made a Cracking Sound";
-  } else if (attackEFF <= 10) {
+    AttackDmg = "8";
+  } else if (attackEFF <= 1) {
     EffText = "Broke a Bone";
+    AttackDmg = "10";
   }
+}
+
+// Draw Level2Finish Screen
+function DrawLevel2FinishedScreen() {
+  setTimeout(StartLevel3, 2000);
+  ctx.fillStyle = "lightblue";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+  ctx.font = "30px Arial";
+  ctx.fillText(
+    `You've Beaten Me Mario, But You Won't Last Long`,
+    cnv.width / 3,
+    cnv.height / 2
+  );
+}
+
+function StartLevel3() {
+  state = "gameOnLevel3";
 }
