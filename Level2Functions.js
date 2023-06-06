@@ -200,15 +200,12 @@ function AttackEfftext() {
 
 // Draw Level2Finish Screen
 function DrawLevel2FinishedScreen() {
-  setTimeout(StartLevel3, 2000);
+  setTimeout(StartLevel3, 4000);
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
   ctx.font = "30px Arial";
-  ctx.fillText(
-    `You've Beaten Me Mario, But You Won't Last Long`,
-    cnv.width / 3,
-    cnv.height / 2
-  );
+  ctx.fillStyle = "black";
+  ctx.fillText(`You've Beaten Me Mario, But You Won't Last Long`, 100, 300);
 }
 
 function StartLevel3() {
