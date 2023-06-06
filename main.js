@@ -24,6 +24,7 @@ let attackEFF = 0;
 let MarioHealthFinal = 100;
 let GoombaHealthFinal = 100;
 let EffText = "";
+let AttackDmg = 0;
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
@@ -61,6 +62,10 @@ function draw() {
     GameonLevel2();
   } else if (state === "level2GameOver") {
     MarioDied();
+  } else if (state === "Level2Finished") {
+    DrawLevel2FinishedScreen();
+  } else if (state === "gameOnLevel3") {
+    console.log(`Level 2 Boos Beaten`);
   }
 
   requestAnimationFrame(draw);
@@ -78,6 +83,8 @@ function mouseDownListner() {
     state = "gameonLevel2";
     MarioHealth = 100;
     MarioHealthFinal = 100;
+    GoombaHealth = 100;
+    GoombaHealthFinal = 100;
   }
 }
 document.addEventListener("keydown", movement);
