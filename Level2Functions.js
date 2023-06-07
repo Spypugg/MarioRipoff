@@ -171,7 +171,7 @@ function GoombaHealthChecker() {
   if (GoombaHealthFinal < 1) {
     state = "level2Finished";
     console.log(`Player has Beaten Level 2`);
-    state = "Level2Finished";
+    DrawLevel2FinishedScreen();
   }
 }
 
@@ -200,14 +200,31 @@ function AttackEfftext() {
 
 // Draw Level2Finish Screen
 function DrawLevel2FinishedScreen() {
-  setTimeout(StartLevel3, 4000);
+  setTimeout(StartLevel3, 10000);
+  setTimeout(DrawAttackUnlock1, 3000);
   ctx.fillStyle = "lightblue";
   ctx.fillRect(0, 0, cnv.width, cnv.height);
   ctx.font = "30px Arial";
   ctx.fillStyle = "black";
   ctx.fillText(`You've Beaten Me Mario, But You Won't Last Long`, 100, 300);
+  UnlockedSound.pause();
 }
 
 function StartLevel3() {
   state = "gameOnLevel3";
+  UnlockedSound.pause();
+}
+
+// Draw Unlocked Attack
+function DrawAttackUnlock1() {
+  ctx.fillStyle = "lightblue";
+  ctx.fillRect(0, 0, cnv.width, cnv.height);
+  ctx.font = "50px Arial";
+  ctx.fillStyle = "black";
+  ctx.fillText(`New Attack Unlocked`, 100, 300);
+  ctx.font = "30px Arial";
+  ctx.fillText(`"Mario Jump"`, 100, 330);
+  console.log(`Before`);
+  UnlockedSound.play();
+  console.log(`After`);
 }
