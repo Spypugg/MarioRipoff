@@ -4,6 +4,8 @@ function GameonLevel2() {
   cnv.addEventListener("click", MouseTrackerLevel2);
 }
 
+setTimeout(ResetAttackText, 8000);
+
 // Draw Level
 function DrawLevel2() {
   // Draw Backgorund
