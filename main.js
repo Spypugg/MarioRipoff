@@ -7,6 +7,7 @@ let playerImg = document.getElementById("player-Img");
 let enemyImg = document.getElementById("enemy-Img");
 let ElongadedMario = document.getElementById("dead-player");
 let mamaMia = document.createElement("audio");
+let UnlockedSound = document.createElement("audio");
 let level1Timer = 200;
 let tries = 1;
 let trys = "trys";
@@ -28,6 +29,7 @@ let AttackDmg = 0;
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
+UnlockedSound.src = "sound/unlock-sound.mp3";
 
 // Event Listner
 window.addEventListener("load", canvasMaker);
@@ -62,10 +64,8 @@ function draw() {
     GameonLevel2();
   } else if (state === "level2GameOver") {
     MarioDied();
-  } else if (state === "Level2Finished") {
-    DrawLevel2FinishedScreen();
   } else if (state === "gameOnLevel3") {
-    console.log(`Level 2 Boos Beaten`);
+    GameonLevel3();
   }
 
   requestAnimationFrame(draw);
