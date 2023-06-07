@@ -80,7 +80,7 @@ function drawBorders() {
 
 function drawStart() {
   // Reset Game Counter
-  level1Timer = 200;
+  level1Timer = 100;
   // Draw Top Border
   ctx.fillStyle = "blue";
   ctx.fillRect(0, 0, cnv.width, 50);
