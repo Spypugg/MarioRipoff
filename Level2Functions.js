@@ -30,9 +30,11 @@ function DrawLevel2() {
   // Draw Attack Select Text
   ctx.font = "50px Arial";
   ctx.fillStyle = "black";
-  ctx.fillText("Punch", 70, 70);
-  ctx.fillText("Kick", 390, 70);
-  ctx.fillText("Locked", cnv.width - 220, 70);
+  ctx.fillText("Punch", 30, 70);
+  ctx.font = `${KickFont} Arial`;
+  ctx.fillText(`${KickText}`, 330, 70);
+  ctx.font = "50px Arial";
+  ctx.fillText("Locked", cnv.width - 260, 70);
   ctx.font = "20px Arial";
   ctx.fillStyle = "black";
   ctx.fillText(`${AttackSelect}`, 20, 140);
@@ -60,26 +62,44 @@ function MouseTrackerLevel2(event) {
     attackEFF = Math.random();
     if (mouseX > 20 && mouseY > 20 && mouseX < 270 && mouseY < 90) {
       console.log("Punched");
+      PunchSound.play();
       AttackEfftext();
-      GoombaHealth -= AttackDmg;
+      finalDMG = AttackDmg + PunchAttackDMG;
+      GoombaHealth -= finalDMG;
       GoombaHealthFinal = Math.round(GoombaHealth);
       AttackSelect = `You Used Punch Which ${EffText}`;
       AttackState = "Enemy";
+      if (KickCooldown > 1) {
+        KickCooldown -= 1;
+        KickText = `Cooldown (Turns Left: ${KickCooldown})`;
+      } else if (KickCooldown === 1) {
+        KickFont = "50px";
+        KickText = `Kick`;
+        KickCooldown -= 1;
+      }
       console.log(`Attack Eff = ${attackEFF}`);
       setTimeout(GoombaAttack, 2500);
       GoombaHealthChecker();
     } else if (mouseX > 321 && mouseX < 572 && mouseY > 20 && mouseY < 90) {
-      console.log("Kicked");
-      AttackEfftext();
-      GoombaHealth -= AttackDmg;
-      GoombaHealthFinal = Math.round(GoombaHealth);
-      AttackSelect = `You Used Kick Which ${EffText}`;
-      AttackState = "Enemy";
-      console.log(`Attack Eff = ${attackEFF}`);
-      setTimeout(GoombaAttack, 2500);
-      GoombaHealthChecker();
-    } else if (mouseX > 630 && mouseX < 880 && mouseY > 19 && mouseY < 90) {
-      console.log("Locked");
+      if (KickCooldown < 1) {
+        console.log("Kicked");
+        AttackEfftext();
+        finalDMG = AttackDmg + KickAttackDMG;
+        GoombaHealth -= finalDMG;
+        GoombaHealthFinal = Math.round(GoombaHealth);
+        AttackSelect = `You Used Kick Which ${EffText}`;
+        AttackState = "Enemy";
+        KickFont = "20px";
+        KickCooldown = 3;
+        kickSound.play();
+        setTimeout(PauseKickSound, 500);
+        KickText = `Cooldown (Turns Left: ${KickCooldown})`;
+        console.log(`Attack Eff = ${attackEFF}`);
+        setTimeout(GoombaAttack, 2500);
+        GoombaHealthChecker();
+      } else if (mouseX > 630 && mouseX < 880 && mouseY > 19 && mouseY < 90) {
+        console.log("Locked");
+      }
     }
   }
 }
@@ -89,7 +109,7 @@ function ResetAttackText() {
   AttackSelect = "Your Turn";
 }
 
-// Goombac Attack If Statements
+// Goomba Attack If Statements
 function GoombaAttack() {
   console.log("GoombaAttack");
   console.log(state, AttackState);
@@ -103,6 +123,7 @@ function GoombaAttack() {
     if (EnemyGoombaAttackSelect <= 0.25) {
       setTimeout(ResetAttackText, 2000);
       AttackEfftext();
+      setTimeout(PausePunchEffect, 1000);
       MarioHealth -= AttackDmg;
       AttackSelect = `King Goomba used GOOMBA BOUNCE Which ${EffText}`;
       console.log("Goomba Attack");
@@ -181,22 +202,25 @@ function GoombaHealthChecker() {
 function AttackEfftext() {
   if (attackEFF <= 0.1) {
     EffText = "Missed";
-    AttackDmg = "0";
+    AttackDmg = 0;
+    KickAttackDMG = 0;
+    PunchAttackDMG = 0;
+    setTimeout(ResetAttackDMG, 1000);
   } else if (attackEFF <= 0.2) {
     EffText = "Felt like a Flick";
-    AttackDmg = "2";
+    AttackDmg = 2;
   } else if (attackEFF <= 0.4) {
     EffText = "Stung";
-    AttackDmg = "4";
+    AttackDmg = 4;
   } else if (attackEFF <= 0.6) {
     EffText = "Hurt";
-    AttackDmg = "6";
+    AttackDmg = 6;
   } else if (attackEFF <= 0.8) {
     EffText = "Made a Cracking Sound";
-    AttackDmg = "8";
+    AttackDmg = 8;
   } else if (attackEFF <= 1) {
     EffText = "Broke a Bone";
-    AttackDmg = "10";
+    AttackDmg = 10;
   }
 }
 
@@ -223,10 +247,26 @@ function DrawAttackUnlock1() {
   ctx.fillRect(0, 0, cnv.width, cnv.height);
   ctx.font = "50px Arial";
   ctx.fillStyle = "black";
-  ctx.fillText(`New Attack Unlocked`, 100, 300);
+  ctx.fillText(`New Move Unlocked`, 100, 300);
   ctx.font = "30px Arial";
   ctx.fillText(`"Mario Jump"`, 100, 330);
   console.log(`Before`);
   UnlockedSound.play();
   console.log(`After`);
+}
+
+// Pause Punch Sound
+function PausePunchEffect() {
+  PunchSound.pause();
+}
+
+// Reset Attack DMG
+function ResetAttackDMG() {
+  PunchAttackDMG = 3;
+  KickAttackDMG = 5;
+}
+
+// Pause Kick Sound
+function PauseKickSound() {
+  kickSound.pause();
 }
