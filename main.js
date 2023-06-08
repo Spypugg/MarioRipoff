@@ -8,6 +8,8 @@ let enemyImg = document.getElementById("enemy-Img");
 let ElongadedMario = document.getElementById("dead-player");
 let mamaMia = document.createElement("audio");
 let UnlockedSound = document.createElement("audio");
+let PunchSound = document.createElement("audio");
+let kickSound = document.createElement("audio");
 let level1Timer = 200;
 let tries = 1;
 let trys = "trys";
@@ -26,10 +28,18 @@ let MarioHealthFinal = 100;
 let GoombaHealthFinal = 100;
 let EffText = "";
 let AttackDmg = 0;
+let PunchAttackDMG = 3;
+let KickAttackDMG = 5;
+let finalDMG = 0;
+let KickCooldown = 0;
+let KickText = "Kick";
+let KickFont = "50px";
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
 UnlockedSound.src = "sound/unlock-sound.mp3";
+PunchSound.src = "sound/punch-sound.mp3";
+kickSound.src = "sound/kick-sound.mp3";
 
 // Event Listner
 window.addEventListener("load", canvasMaker);
