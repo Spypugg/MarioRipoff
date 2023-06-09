@@ -1,7 +1,7 @@
 // Global Variables
 let ctx;
 let cnv;
-let player = { w: 50, h: 50, y: 50, x: 50 };
+let player = { w: 50, h: 50, y: 50, y2: 690, x: 50, x2: 50 };
 let enemy = { w: 50, h: 50, y: 400, x: 400 };
 let playerImg = document.getElementById("player-Img");
 let enemyImg = document.getElementById("enemy-Img");
@@ -34,6 +34,9 @@ let finalDMG = 0;
 let KickCooldown = 0;
 let KickText = "Kick";
 let KickFont = "50px";
+let Velocity = 0;
+let lv3x = 300;
+let SpaceisPressed = false;
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
