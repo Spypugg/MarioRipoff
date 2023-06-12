@@ -27,6 +27,10 @@ function CheckLevel3Movement(event) {
   if (event.keyCode === 32) {
     SpaceisPressed = true;
     setTimeout(makeFalse, 10);
+  } else if (event.keyCode === 65 && player.x2 > 0) {
+    player.x2--;
+  } else if (event.keyCode === 68 && player.x2 + player.w < cnv.width) {
+    player.x2++;
   }
 }
 
@@ -37,20 +41,18 @@ function PlayerLogic() {
     Velocity = -2;
   }
 
-  if (player.y2 + player.h < cnv.height - 70) {
-    if (Velocity < 0) {
-      Velocity + 0.1;
-      player.y2 += Velocity;
-      if (Velocity > 2) {
-        velocity = 2;
-      }
-    }
-    console.log("going down");
+  if (Velocity >= -2 && Velocity !== 0 && player.y2 + player.h <= 740) {
+    Velocity += 0.01;
+    console.log(`${Velocity}`);
+    player.y2 += Velocity;
+  } else if (Velocity > 2) {
+    Velocity = 2;
   }
 
-  if (Velocity < 0) {
-    Velocity + 0.1;
-    player.y2 += Velocity;
+  if (player.y2 > 690) {
+    player.y2 = 690;
+    Velocity = 0;
+    console.log("Landed");
   }
 }
 
