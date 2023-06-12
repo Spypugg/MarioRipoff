@@ -237,8 +237,8 @@ function DrawLevel2FinishedScreen() {
 }
 
 function StartLevel3() {
-  state = "gameOnLevel3";
   UnlockedSound.pause();
+  state = "gameOnLevel3";
 }
 
 // Draw Unlocked Attack
