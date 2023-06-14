@@ -54,6 +54,7 @@ function PlayerLogic() {
   if (SpaceisPressed && Velocity === 0) {
     console.log(`Function ran`);
     Velocity = -5;
+    jumpSound.play();
   }
 
   if (Velocity >= -5 && Velocity !== 0 && player.y2 + player.h <= 740) {
