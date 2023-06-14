@@ -92,7 +92,6 @@ function MouseTrackerLevel2(event) {
         KickFont = "20px";
         KickCooldown = 3;
         kickSound.play();
-        setTimeout(PauseKickSound, 500);
         KickText = `Cooldown (Turns Left: ${KickCooldown})`;
         console.log(`Attack Eff = ${attackEFF}`);
         setTimeout(GoombaAttack, 2500);
