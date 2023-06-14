@@ -37,6 +37,8 @@ let KickFont = "50px";
 let Velocity = 0;
 let lv3x = 300;
 let SpaceisPressed = false;
+let aPressed = false;
+let dPressed = false;
 
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
