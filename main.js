@@ -6,10 +6,6 @@ let enemy = { w: 50, h: 50, y: 400, x: 400 };
 let playerImg = document.getElementById("player-Img");
 let enemyImg = document.getElementById("enemy-Img");
 let ElongadedMario = document.getElementById("dead-player");
-let mamaMia = document.createElement("audio");
-let UnlockedSound = document.createElement("audio");
-let PunchSound = document.createElement("audio");
-let kickSound = document.createElement("audio");
 let level1Timer = 200;
 let tries = 1;
 let trys = "trys";
@@ -40,11 +36,19 @@ let SpaceisPressed = false;
 let aPressed = false;
 let dPressed = false;
 
+// Audio Variables
+let mamaMia = document.createElement("audio");
+let UnlockedSound = document.createElement("audio");
+let PunchSound = document.createElement("audio");
+let kickSound = document.createElement("audio");
+let jumpSound = document.createElement("audio");
+
 // Get Sound Effect Source
 mamaMia.src = "sound/Super Mario 64 Mamma mia.mp3";
 UnlockedSound.src = "sound/unlock-sound.mp3";
 PunchSound.src = "sound/punch-sound.mp3";
 kickSound.src = "sound/kick-sound.mp3";
+jumpSound.src = "sound/jump-sound.mp3";
 
 // Event Listner
 window.addEventListener("load", canvasMaker);
