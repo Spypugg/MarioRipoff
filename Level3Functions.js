@@ -6,6 +6,7 @@ function GameonLevel3() {
 
 // Movement Event Listner
 document.addEventListener("keydown", CheckLevel3Movement);
+document.addEventListener("keyup", CheckKeyUp);
 
 // Draw Level 3
 function DrawLevel3() {
@@ -25,12 +26,26 @@ function DrawLevel3() {
 function CheckLevel3Movement(event) {
   // Movement If Statements
   if (event.keyCode === 32) {
+    // Space Bar
     SpaceisPressed = true;
     setTimeout(makeFalse, 10);
-  } else if (event.keyCode === 65 && player.x2 > 0) {
-    player.x2--;
-  } else if (event.keyCode === 68 && player.x2 + player.w < cnv.width) {
-    player.x2++;
+  } else if (event.keyCode === 65) {
+    // A Key
+    aPressed = true;
+  } else if (event.keyCode === 68) {
+    // D Key
+    dPressed = true;
+  }
+}
+
+//Key Up Logic
+function CheckKeyUp(event) {
+  if (event.keyCode === 65) {
+    // A Key
+    aPressed = false;
+  } else if (event.keyCode === 68) {
+    // D Key
+    dPressed = false;
   }
 }
 
@@ -38,21 +53,27 @@ function CheckLevel3Movement(event) {
 function PlayerLogic() {
   if (SpaceisPressed && Velocity === 0) {
     console.log(`Function ran`);
-    Velocity = -2;
+    Velocity = -5;
   }
 
-  if (Velocity >= -2 && Velocity !== 0 && player.y2 + player.h <= 740) {
-    Velocity += 0.01;
+  if (Velocity >= -5 && Velocity !== 0 && player.y2 + player.h <= 740) {
+    Velocity += 0.1;
     console.log(`${Velocity}`);
     player.y2 += Velocity;
-  } else if (Velocity > 2) {
-    Velocity = 2;
+  } else if (Velocity > 5) {
+    Velocity = 5;
   }
 
   if (player.y2 > 690) {
     player.y2 = 690;
     Velocity = 0;
     console.log("Landed");
+  }
+
+  if (aPressed && player.x2 > 0) {
+    player.x2--;
+  } else if (dPressed && player.x2 + player.w < cnv.width) {
+    player.x2++;
   }
 }
 
