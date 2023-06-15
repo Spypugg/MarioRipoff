@@ -4,6 +4,7 @@ let cnv;
 let player = { w: 50, h: 50, y: 50, y2: 690, x: 50, x2: 50 };
 let enemy = { w: 50, h: 50, y: 400, x: 400 };
 let playerImg = document.getElementById("player-Img");
+let PlayerImg2 = document.getElementById("PlayerIMG2");
 let enemyImg = document.getElementById("enemy-Img");
 let ElongadedMario = document.getElementById("dead-player");
 let level1Timer = 200;
@@ -32,6 +33,12 @@ let KickText = "Kick";
 let KickFont = "50px";
 let Velocity = 0;
 let lv3x = 300;
+
+// Sprite Movement
+let spriteMovement = 1;
+let Gameframe = 0;
+
+// Movement Variables
 let SpaceisPressed = false;
 let aPressed = false;
 let dPressed = false;
