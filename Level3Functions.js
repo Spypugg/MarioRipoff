@@ -19,7 +19,17 @@ function DrawLevel3() {
   ctx.drawImage(Level2Floor, 300, cnv.height - 70);
 
   // DrawMario
-  ctx.drawImage(playerImg, player.x2, player.y2, player.w, player.h);
+  ctx.drawImage(
+    PlayerImg2,
+    spriteMovement * 256,
+    0,
+    256,
+    256,
+    player.x2,
+    player.y2,
+    player.w,
+    player.h
+  );
 }
 
 // Check Which key Pressed for Movement
@@ -43,9 +53,13 @@ function CheckKeyUp(event) {
   if (event.keyCode === 65) {
     // A Key
     aPressed = false;
+    spriteMovement = 1;
+    Gameframe = 0;
   } else if (event.keyCode === 68) {
     // D Key
     dPressed = false;
+    spriteMovement = 1;
+    Gameframe = 0;
   }
 }
 
@@ -81,4 +95,20 @@ function PlayerLogic() {
 // Make Press False
 function makeFalse() {
   SpaceisPressed = false;
+}
+
+// Loop Player Sprite
+requestAnimationFrame(spriteLoop);
+function spriteLoop() {
+  if (dPressed === true || aPressed === true) {
+    Gameframe++;
+    if (Gameframe % 8 === 0) {
+      spriteMovement++;
+    }
+
+    if (spriteMovement > 5) {
+      spriteMovement = 0;
+    }
+  }
+  requestAnimationFrame(spriteLoop);
 }
